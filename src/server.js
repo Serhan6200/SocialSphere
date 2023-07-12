@@ -9,7 +9,7 @@ server = app.listen(PORT, () => {
   logger.info(`Server is running on port ${PORT}`);
 });
 
-// Handle Server Errors
+// Exit Process
 const exitHandler = () => {
   if (server) {
     logger.info("Server closed");
@@ -19,6 +19,7 @@ const exitHandler = () => {
   }
 };
 
+// Handle Server Errors
 const unexpectedErrorHandler = (error) => {
   logger.error(error);
   exitHandler();
@@ -26,3 +27,6 @@ const unexpectedErrorHandler = (error) => {
 
 process.on("uncaughtException", unexpectedErrorHandler);
 process.on("unhandledRejection", unexpectedErrorHandler);
+
+// Handle SIGTERM (Signal terminate : Close server before app crash)
+process.on("SIGTERM", unexpectedErrorHandler);
