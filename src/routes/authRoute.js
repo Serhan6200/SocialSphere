@@ -5,7 +5,7 @@ const {
   login,
   logout,
   refreshToken,
-} = require("../controllers/auth.controller");
+} = require("../controllers/authController");
 const router = express.Router();
 
 router.route("/register").post(trimRequest.all, register);
