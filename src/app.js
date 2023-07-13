@@ -8,6 +8,7 @@ const compression = require("compression");
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
 const createHttpErrors = require("http-errors");
+const routes = require("./routes/index");
 
 // Dotenv Config
 dotenv.config();
@@ -20,7 +21,7 @@ if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
 
-// Helmet (Little Securty Touch For HTTP Response Headers)
+// Helmet (Securty For HTTP Response Headers)
 app.use(helmet());
 
 // JSON Parse Request Body
@@ -32,7 +33,7 @@ app.use(mongoSanitize());
 // Enable Cookie Parser
 app.use(cookieParser());
 
-// Gzip Compression (Make it faster responses)
+// Gzip Compression (Faster responses)
 app.use(compression());
 
 // File Upload
@@ -41,25 +42,22 @@ app.use(fileUpload({ useTempFiles: true }));
 // Access to the server
 app.use(cors());
 
+// Routes
+app.use("/api/prod", routes);
+
 // Not Found
 app.use(async (req, res, next) => {
-  next(createHttpErrors.NotFound("This route does not exist"));
+  next(createHttpErrors.NotFound());
 });
 
 // HTTP Errors
 app.use(async (err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
+  res.status(err.status || 500).send({
     error: {
       status: err.status || 500,
       message: err.message,
     },
   });
-});
-
-app.post("/", (req, res) => {
-  //res.json({ message: "Hebeles Huebele..." });
-  res.json(req.body);
 });
 
 module.exports = app;
