@@ -1,9 +1,31 @@
 const app = require("./app");
 const logger = require("./configs/logger");
+const mongoose = require("mongoose");
 
 // ENV Variables
 const PORT = process.env.PORT;
 let server;
+
+// Handle Database Errors
+mongoose.connection.on("error", (err) => {
+  logger.error(`Database error ${err}`);
+  process.exit(1);
+});
+
+// Debug Database Mode
+if (process.env.NODE_ENV !== "production") {
+  mongoose.set("debug", true);
+}
+
+// Database Connection
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    logger.info("Database connected");
+  });
 
 server = app.listen(PORT, () => {
   logger.info(`Server is running on port ${PORT}`);
