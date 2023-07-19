@@ -1,4 +1,6 @@
-const dotenv = require("dotenv");
+// Dotenv Config
+require("dotenv").config();
+
 const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
@@ -9,9 +11,6 @@ const fileUpload = require("express-fileupload");
 const cors = require("cors");
 const createHttpErrors = require("http-errors");
 const routes = require("./routes/index");
-
-// Dotenv Config
-dotenv.config();
 
 // Create Express APP
 const app = express();
