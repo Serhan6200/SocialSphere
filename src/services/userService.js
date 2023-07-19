@@ -20,3 +20,13 @@ exports.createUser = async (userData) => {
 
   return user;
 };
+
+exports.getUser = async (userID) => {
+  const user = await userModel.findById(userID);
+  if (!user) {
+    throw createHttpError.NotFound(
+      "Please try again with a different ID, this ID not found."
+    );
+  }
+  return user;
+};

@@ -12,5 +12,8 @@ router
     validate(userValidate.createUser),
     userController.createUser
   );
+router
+  .route("/:id")
+  .get(trimRequest.all, validate(userValidate.getUser), userController.getUser);
 
 module.exports = router;
