@@ -1,5 +1,7 @@
 const catchAsync = require("express-async-handler");
+const userService = require("../services/userService");
 
-exports.createUser = catchAsync((req, res) => {
-  res.send(req.body);
+exports.createUser = catchAsync(async (req, res) => {
+  const user = await userService.createUser(req.body);
+  res.send(user);
 });

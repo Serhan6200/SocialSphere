@@ -17,7 +17,7 @@ dotenv.config();
 const app = express();
 
 // Morgan (Directory Log)
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV == "development") {
   app.use(morgan("dev"));
 }
 

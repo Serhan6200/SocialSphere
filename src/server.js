@@ -13,7 +13,7 @@ mongoose.connection.on("error", (err) => {
 });
 
 // Debug Database Mode
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV == "development") {
   mongoose.set("debug", true);
 }
 
